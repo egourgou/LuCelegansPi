@@ -69,7 +69,6 @@ RUN bash -c "wget http://www.webmin.com/jcameron-key.asc"
 RUN apt-key add jcameron-key.asc
 
 RUN apt update
-RUN bash -c "sudo apt autoclean"
 RUN apt install -y webmin
 
 ##################################
