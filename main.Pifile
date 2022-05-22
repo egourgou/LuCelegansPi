@@ -6,7 +6,7 @@ RUN touch /boot/ssh
 
 source .env
 
-hostname="${HOSTNAME:-lucelegans}"
+hostname="${HOSTNAME:-luceleganspi}"
 user="${USER:-pi}"
 password="${USERPASSWORD:-lucelegans}"
 email="${EMAIL:-egourgou@umich.edu}"
