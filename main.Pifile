@@ -64,7 +64,7 @@ RUN bash -c "sudo chown -R ${user} /etc/automagic-ap"
 
 # Installing webmin
 
-RUN bash -c "find /var/log/ -type f -regex '.*\.[0-9]+\.gz$' -delete"
+RUN bash -c "truncate –size 0 /var/log/dpkg.log"
 
 RUN bash -c 'echo "deb https://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list'
 RUN bash -c "wget http://www.webmin.com/jcameron-key.asc"
