@@ -5,7 +5,7 @@ on:
     inputs:
       host_name:
         description: "Hostname"
-        default: LuCelegans
+        default: lucelegans
         required: true
       user:
         description: "Username"
