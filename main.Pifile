@@ -89,8 +89,10 @@ RUN bash -c "arduino-cli lib install CapacitiveSensor"
 
 RUN bash -c "sudo rm -rf /etc/motd"
 source ./bash_profile.Pifile
+RUN bash -c "sudo chown ${user} /home/${user}/.bash_profile"
 
 source ./bash_aliases.Pifile
+RUN bash -c "sudo chown ${user} /home/${user}/.bash_aliases"
 
 ##################################
 
