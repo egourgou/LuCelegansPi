@@ -15,16 +15,12 @@ echo "           â–‘â–ˆâ–‘â–‘â–‘â–ˆâ–‘â–ˆâ
 echo "           â–‘â–€â–€â–€â–‘â–€â–€â–€â–‘â–€â–€â–€â–‘â–€â–€â–€â–‘â–€â–€â–€â–‘â–€â–€â–€â–‘â–€â–€â–€â–‘â–€â–‘â–€â–‘â–€â–‘â–€â–‘â–€â–€â–€â–‘           "
 echo "                                                               "
 
-# get the load averages
-read one five fifteen rest < /proc/loadavg
-
 echo "$(tput setaf 3)
 `date +"%A, %e %B %Y, %r"`
 `uname -srmo`
 
 $(tput sgr0)- Uptime.............: uptime -p
 $(tput sgr0)- Memory.............: `free | grep Mem | awk '{print $3/1024}'` MB (Used) / `cat /proc/meminfo | grep MemTotal | awk {'print $2/1024'}` MB (Total)
-$(tput sgr0)- Load Averages......: ${one}, ${five}, ${fifteen} (1, 5, 15 min)
 $(tput sgr0)- Running Processes..: `ps ax | wc -l | tr -d " "`
 $(tput sgr0)- IP Address.........: `hostname -I | /usr/bin/cut -d " " -f 1`
 
