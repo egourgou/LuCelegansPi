@@ -91,18 +91,17 @@ RUN bash -c "sudo rm -rf /etc/motd"
 
 RUN bash -c "touch /home/${user}/.bash_aliases"
 
-RUN bash -c "echo <<EOF
-  alias upload_Mechano="arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/Capacitive"
-  EOF
-  >> /home/${user}/.bash_aliases"
-RUN bash -c "echo <<EOF
-  alias upload_Chemo="arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/RFID"
-  EOF
-  >> /home/${user}/.bash_aliases"
-RUN bash -c "echo <<EOF
-  alias upload_Thermo="arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/Thermistor"
-  EOF
-  >> /home/${user}/.bash_aliases"
+MECHANO="arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/Capacitive"
+CHEMO="arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/RFID"
+THERMO="arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/Thermistor"
+
+ECHO_MECHANO="alias upload_Mechano=\'$MECHANO\'"
+ECHO_CHEMO="alias upload_Chemo=\'$CHEMO\'"
+ECHO_THERMO="alias upload_Thermo=\'$THERMO\'"
+
+RUN bash -c "echo $ECHO_MECHANO >> /home/${user}/.bash_aliases"
+RUN bash -c "echo $ECHO_CHEMO >> /home/${user}/.bash_aliases"
+RUN bash -c "echo $ECHO_THERMO >> /home/${user}/.bash_aliases"
 
 RUN bash -c "sudo chown ${user} /home/${user}/.bash_aliases"
 
