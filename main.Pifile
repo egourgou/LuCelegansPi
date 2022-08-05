@@ -85,6 +85,15 @@ RUN bash -c "arduino-cli lib install CapacitiveSensor"
 
 ##################################
 
+# Creating Aliases
+
+RUN bash -c "touch ~./bash_aliases"
+RUN bash -c "echo "alias upload_Mechano='arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/pi/LuCelegans/Capacitive'" >> ~/.bash_aliases"
+RUN bash -c "echo "alias upload_Chemo='arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/pi/LuCelegans/RFID'" >> ~/.bash_aliases"
+RUN bash -c "echo "alias upload_Thermo='arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/pi/LuCelegans/Thermistor'" >> ~/.bash_aliases"
+
+##################################
+
 # Setting up startup_mailer and rc.local
 
 source ./startup_mailer.Pifile
