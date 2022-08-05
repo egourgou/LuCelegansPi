@@ -87,6 +87,8 @@ RUN bash -c "arduino-cli lib install CapacitiveSensor"
 
 # Setting up .bash_aliases
 
+RUN bash -c "sudo rm -rf /etc/motd"
+
 RUN bash -c "touch /home/${user}/.bash_aliases"
 
 RUN sudo bash -c "$(echo "alias upload_Mechano='arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/Capacitive'" >> /home/${user}/.bash_aliases)"
