@@ -73,10 +73,33 @@ RUN apt install -y webmin
 
 ##################################
 
-# Configuring message of the day (motd)
+# Installing Arduino-CLI
+
+RUN bash -c "wget -qO arduino-cli.tar.gz https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_ARMv7.tar.gz"
+RUN bash -c "sudo tar xf arduino-cli.tar.gz -C /bin arduino-cli"
+RUN bash -c "rm -rf arduino-cli.tar.gz"
+RUN bash -c "arduino-cli config init --dest-dir /home/${user}/.arduino15"
+RUN bash -c "sudo chown -R ${user} /home/${user}/.arduino15"
+RUN bash -c "arduino-cli config set directories.data /home/pi/.arduino15"
+RUN bash -c "arduino-cli config set directories.downloads /home/pi/.arduino15/staging"
+RUN bash -c "arduino-cli config set directories.user /home/pi/Arduino"
+RUN bash -c "arduino-cli core install arduino:avr"
+RUN bash -c "arduino-cli lib install FastLED"
+RUN bash -c "arduino-cli lib install CapacitiveSensor"
+
+##################################
+
+# Setting up .bash_aliases
 
 RUN bash -c "sudo rm -rf /etc/motd"
-RUN bash -c "curl -L https://raw.githubusercontent.com/imsenthur/neuropi-motd/main/motd -o /home/${user}/.bash_profile"
+
+RUN bash -c "touch /home/${user}/.bash_aliases"
+
+RUN bash -c "echo 'alias upload_Mechano=\"arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/Capacitive\"' >> /home/${user}/.bash_aliases"
+RUN bash -c "echo 'alias upload_Chemo=\"arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/RFID\"' >> /home/${user}/.bash_aliases"
+RUN bash -c "echo 'alias upload_Thermo=\"arduino-cli compile -b arduino:avr:uno -u -p <PORT> /home/${user}/LuCelegans/Thermistor\"' >> /home/${user}/.bash_aliases"
+
+RUN bash -c "sudo chown ${user} /home/${user}/.bash_aliases"
 
 ##################################
 
