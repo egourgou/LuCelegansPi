@@ -91,7 +91,7 @@ def send_email(smtpserver, msg):
 if __name__ == '__main__':
 
   # Modify recipients here!
-  recipient_str = "${email}"
+  recipient_str = "ninashec@umich.edu"
   recipients = recipient_str.split(", ")
 
   #######################################################
