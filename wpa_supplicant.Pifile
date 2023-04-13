@@ -24,11 +24,19 @@ network={
 	scan_ssid=1
 	key_mgmt=WPA-EAP
 	eap=PEAP
-	identity="me-rousewifi"
-	password=hash:${mwpsk}
+	identity="ninashec"
+	password="Ihatepeople1234!"
 	id_str="MWireless"
 }
-
+network={
+	priority=8
+	ssid="eduroam"
+	scan_ssid=1
+	key_mgmt=WPA-EAP
+	eap=PEAP
+	identity="ninashec"
+	password="Ihatepeople1234!"
+}
 network={
 	priority=5
 	scan_ssid=1
