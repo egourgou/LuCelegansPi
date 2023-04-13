@@ -1,8 +1,4 @@
-# Configures wpa_supplicant for systemd-networkd networking
-RUN touch /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-
-RUN tee -a /etc/wpa_supplicant/wpa_supplicant-wlan0.conf <<EOF
-country=${countrycode}
+country=US
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev                           
 update_config=1                                                                   
 ap_scan=1
@@ -10,10 +6,10 @@ ap_scan=1
 ### automagic-ap ###                                                                              
 network={
 	priority=0
-	ssid="${apssid}"                                                         
+	ssid="LuCelegansRPi"                                                         
 	mode=2                                         
 	key_mgmt=WPA-PSK                                                             
-	psk="${appsk}"                                
+	psk="lucelegans"                                
 	frequency=2462                                                               
 }
 
@@ -24,23 +20,14 @@ network={
 	scan_ssid=1
 	key_mgmt=WPA-EAP
 	eap=PEAP
-	identity="ninashec"
-	password="Ihatepeople1234!"
+	identity="me-rousewifi"
+	password=hash:b2d784043381891471d4ac5ba50e7826
 	id_str="MWireless"
 }
-network={
-	priority=8
-	ssid="eduroam"
-	scan_ssid=1
-	key_mgmt=WPA-EAP
-	eap=PEAP
-	identity="ninashec"
-	password="Ihatepeople1234!"
-}
+
 network={
 	priority=5
 	scan_ssid=1
-	ssid="${wifissid}"
-	psk="${wifipsk}"
+	ssid="network"
+	psk="password"
 }
-EOF
