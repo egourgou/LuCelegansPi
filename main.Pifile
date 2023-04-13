@@ -78,7 +78,7 @@ RUN apt install -y webmin
 RUN bash -c "wget -qO arduino-cli.tar.gz https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_ARMv7.tar.gz"
 RUN bash -c "sudo tar xf arduino-cli.tar.gz -C /bin arduino-cli"
 RUN bash -c "rm -rf arduino-cli.tar.gz"
-RUN bash -c "arduino-cli config init --dest-dir /home/${user}/.arduino15"
+RUN bash -c "arduino-cli config init --dest-dir /home/pi/.arduino15"
 RUN bash -c "sudo chown -R ${user} /home/${user}/.arduino15"
 RUN bash -c "arduino-cli config set directories.data /home/pi/.arduino15"
 RUN bash -c "arduino-cli config set directories.downloads /home/pi/.arduino15/staging"
