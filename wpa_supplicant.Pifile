@@ -25,9 +25,3 @@ network={
 	id_str="MWireless"
 }
 
-network={
-	priority=5
-	scan_ssid=1
-	ssid="network"
-	psk="password"
-}
