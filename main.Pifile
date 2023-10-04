@@ -1,20 +1,20 @@
 FROM https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-11-08/2021-10-30-raspios-bullseye-armhf-lite.zip
 
-PUMP 850M
+PUMP 800M
 
 RUN touch /boot/ssh
 
 source .env
 
-hostname="${HOSTNAME:-luceleganspi}"
+hostname="${HOSTNAME:-neurobionics}"
 user="${USER:-pi}"
-password="${USERPASSWORD:-lucelegans}"
-email="${EMAIL:-egourgou@umich.edu}"
+password="${USERPASSWORD:-neurobionics}"
+email="${EMAIL:-ejrouse@umich.edu}"
 mwpsk="${PASSWORD:-password}"
 wifissid="${WIFI_SSID:-network}"
 wifipsk="${WIFI_PASSPHRASE:-password}"
-apssid="${AP_SSID:-LuCelegansRPi}"
-appsk="${AP_PASSPHRASE:-lucelegans}"
+apssid="${AP_SSID:-NeurobionicsRPi}"
+appsk="${AP_PASSPHRASE:-neurobionics}"
 countrycode="${WIFI_CC:-US}"
 
 ##################################
@@ -73,7 +73,10 @@ RUN apt install -y webmin
 
 ##################################
 
+# Configuring message of the day (motd)
 
+RUN bash -c "sudo rm -rf /etc/motd"
+RUN bash -c "curl -L https://raw.githubusercontent.com/imsenthur/neuropi-motd/main/motd -o /home/${user}/.bash_profile"
 
 ##################################
 
