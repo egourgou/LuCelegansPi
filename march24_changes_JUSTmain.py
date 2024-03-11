@@ -1,0 +1,96 @@
+import serial
+import time
+import vlc
+import RPi.GPIO as GPIO
+serArduino = serial.Serial(
+    port='/dev/ttyACM0', #Replace ttyS0 with ttyAM0 for Pi1,Pi2,Pi0
+    baudrate = 9600,
+    parity=serial.PARITY_NONE,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.EIGHTBITS,
+    timeout=1
+)
+serESP32 = serial.Serial(
+    port='/dev/ttyUSB0',
+    baudrate = 115200,
+    parity=serial.PARITY_NONE,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.EIGHTBITS,
+    timeout=1
+)
+time.sleep(2)
+GPIO.setmode(GPIO.BCM)
+# GPIO Pins
+CIRCUIT_21_STAGE_0_PIN = 17 # when pin array at top right of pi: left, from top 6th
+CIRCUIT_21_STAGE_1_PIN = 27 # when pin array at top right of pi: left, from top 7th
+CIRCUIT_34_STAGE_0_PIN = 5  # when pin array at top right of pi: left, from top 15th (or from bottom 6th)
+# to do: add more pins for circuits and stages
+CIRCUIT_34_STAGE_1_PIN = 17 #TEMP TEST- red
+CIRCUIT_34_STAGE_2_PIN = 27 #blue
+
+GPIO.setup(CIRCUIT_21_STAGE_0_PIN, GPIO.OUT)
+GPIO.setup(CIRCUIT_21_STAGE_1_PIN, GPIO.OUT)
+GPIO.setup(CIRCUIT_34_STAGE_0_PIN, GPIO.OUT)
+
+
+# serArduino.write('Something'.encode())
+while True:
+    while serArduino.in_waiting:
+        message = serArduino.readline()
+        print('Received: ', message)
+        message = message.decode()
+        if message[-2:] == '\r\n':
+            message = message[0:-2]
+        print(message, "\n")
+        # the processing part
+        videoname = ""
+        processed = False
+        if message == 'E0': #capacitive 
+            processed = True
+            videoname='21_E0.avi' # set the video name
+            media = vlc.MediaPlayer(videoname)
+            # start playing video
+            media.toggle_fullscreen()
+            media.play()
+            
+            serESP32.write(("TrololoSong.wav").encode())
+            # while playing the video, set corresponding GPIO pin to light up EL wire
+            GPIO.output(CIRCUIT_21_STAGE_0_PIN, GPIO.HIGH)
+            time.sleep(3)
+            # turn off first and turn on second at the same time
+            GPIO.output(CIRCUIT_21_STAGE_1_PIN, GPIO.HIGH)
+            time.sleep(3)
+            GPIO.output(CIRCUIT_21_STAGE_0_PIN, GPIO.LOW)
+            GPIO.output(CIRCUIT_21_STAGE_1_PIN, GPIO.LOW)
+            
+            time.sleep(17-2*3) # play video for 17 seconds and then stop, need to change according to the length of video
+            media.stop()
+        if message == 'H0': #RFID
+            processed = True
+            videoname='34_H0.avi' # set the video name
+            media = vlc.MediaPlayer(videoname)
+            
+            # start playing video
+            media.toggle_fullscreen()
+            media.play()
+            serESP32.write(("SpringFestivalPrelude.wav").encode())
+            # while playing the video, set corresponding GPIO pin to light up EL wire
+            GPIO.output(CIRCUIT_34_STAGE_0_PIN, GPIO.HIGH)
+            time.sleep(3)
+            # turn off first and turn on second at the same time
+            GPIO.output(CIRCUIT_34_STAGE_1_PIN, GPIO.HIGH) #green
+            time.sleep(3)
+            GPIO.output(CIRCUIT_34_STAGE_2_PIN, GPIO.HIGH) #blue
+            time.sleep(3)
+            
+            GPIO.output(CIRCUIT_34_STAGE_0_PIN, GPIO.LOW)
+            GPIO.output(CIRCUIT_34_STAGE_1_PIN, GPIO.LOW)
+            GPIO.output(CIRCUIT_34_STAGE_2_PIN, GPIO.LOW)
+            time.sleep(17-3) # play video for 20 seconds and then stop, need to change according to the length of video
+            media.stop()
+        if processed:
+            # ignore all the pending message
+            while serArduino.in_waiting:
+                serArduino.readline()
+
+
