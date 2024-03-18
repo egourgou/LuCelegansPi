@@ -25,7 +25,7 @@ CIRCUIT_21_STAGE_0_PIN = 17 # when pin array at top right of pi: left, from top 
 CIRCUIT_21_STAGE_1_PIN = 27 # when pin array at top right of pi: left, from top 7th
 CIRCUIT_34_STAGE_0_PIN = 5  # when pin array at top right of pi: left, from top 15th (or from bottom 6th)
 # to do: add more pins for circuits and stages
-CIRCUIT_34_STAGE_1_PIN = 17 #TEMP TEST- red
+CIRCUIT_34_STAGE_1_PIN = 13 #green
 CIRCUIT_34_STAGE_2_PIN = 27 #blue
 
 GPIO.setup(CIRCUIT_21_STAGE_0_PIN, GPIO.OUT)
